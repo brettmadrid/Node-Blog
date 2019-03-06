@@ -1,8 +1,10 @@
 const express = require("express");
+const cors = require('cors');
 
 const Users = require("./userDb.js");
 
 const router = express.Router();
+router.use(cors());
 
 // Custom Middleware
 function allCaps(req, res, next) {

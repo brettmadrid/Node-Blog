@@ -56,7 +56,6 @@ router.put("/:id", async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: "Post info could not be modified" });
     }
-  
 });
 
 // GET BY ID COMPLETE

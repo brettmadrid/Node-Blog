@@ -1,0 +1,18 @@
+.App {
+  background-color: slategray;
+}
+
+.paper {
+  margin: 3%;
+  width: 30%;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 3%;
+  width: 180px;
+}
