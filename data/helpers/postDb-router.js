@@ -16,14 +16,15 @@ router.get("/", async (req, res) => {
   }
 });
 
-//POST COMPLETE
-router.post("/", async (req, res) => {
+// POST COMPLETE
+router.post('/:id', async (req, res) => {
   try {
-    const newPost = await Posts.insert(req.body);
-    res.status(201).json(newPost);
+    const newPost = { ...req.body, user_id: req.params.id };
+    const message = await Posts.insert(newPost);
+    res.status(201).json(message);
   } catch (error) {
     res.status(500).json({
-      message: "Error adding the post."
+      message: 'Error adding the post',
     });
   }
 });
