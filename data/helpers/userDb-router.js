@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors');
 
 const Users = require("./userDb.js");
+const Posts = require("./postDb.js");
 
 const router = express.Router();
 router.use(cors());
@@ -12,7 +13,7 @@ function allCaps(req, res, next) {
   next();
 }
 
-// GET
+// GET COMPLETE
 router.get("/", async (req, res) => {
   try {
     const users = await Users.get(req.query);
@@ -54,6 +55,7 @@ router.get("/:id", async (req, res) => {
 // DELETE COMPLETE
 router.delete("/:id", async (req, res) => {
   try {
+    const posts = await Posts.removeByUser(req.params.id);
     const user = await Users.remove(req.params.id);
 
     if (user) {
