@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 
 const Users = require("./userDb.js");
 const Posts = require("./postDb.js");
@@ -54,18 +54,22 @@ router.get("/:id", async (req, res) => {
 
 // DELETE COMPLETE
 router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const posts = await Posts.removeByUser(req.params.id);
-    const user = await Users.remove(req.params.id);
+    // first check to see if user id exists
+    const user = await Users.getById(id);
 
     if (user) {
-      res.status(200).json(user);
+      await Posts.removeByUser(id);
+      await Users.remove(id);
+      res.status(200).json({removed: user});
     } else {
-      res.status(404).json({ message: "The id could not be found" });
+      res.status(404).json({ err: "The id could not be found" });
     }
   } catch (error) {
     res.status(500).json({
-      message: "Error removing the user"
+      err: "Error removing the user"
     });
   }
 });
@@ -96,7 +100,5 @@ router.get("/:id/posts", async (req, res) => {
     });
   }
 });
-
-
 
 module.exports = router;
